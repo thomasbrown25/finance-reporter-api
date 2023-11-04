@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using finance_reporter_api.Models;
 using finance_reporter_api.Data;
 
-namespace finance_reporter_api.Logger
+namespace finance_reporter_api.Services.LoggerService
 {
     public class Logger : ILogger
     {

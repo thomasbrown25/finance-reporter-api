@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj": {}
+    "c:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj": {
+    "c:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj",
+        "projectUniqueName": "c:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj",
         "projectName": "finance-reporter-api",
-        "projectPath": "C:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj",
+        "projectPath": "c:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj",
         "packagesPath": "C:\\Users\\thobrown\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\obj\\",
+        "outputPath": "c:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\thobrown\\AppData\\Roaming\\NuGet\\NuGet.Config"

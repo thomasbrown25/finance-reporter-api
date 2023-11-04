@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N1HBFSWU2StNieAQzw003iwTJcnFG76NKKABDYBjYjaX/o99AcuZH7S+l1UsL2Ib4vDR9hbvYldyvB7JM54vTA==",
+  "dgSpecHash": "Pdr68siNt6wdPkECs5tVlCvPEgNIfGDL/Zw7mAYzS5gkXH9TsCAi02VHZuNgUURIr28Cm1gG/scN22HS2ecY0A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj",
+  "projectFilePath": "c:\\Users\\thobrown\\Documents\\Projects\\finance-reporter-api\\finance-reporter-api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thobrown\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\thobrown\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

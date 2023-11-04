@@ -10,7 +10,7 @@ namespace finance_reporter_api.Utils
 {
     public static class Helper
     {
-        public static User GetCurrentUser(DataContext _context, IHttpContextAccessor _httpContextAccessor)
+        public static User? GetCurrentUser(DataContext _context, IHttpContextAccessor _httpContextAccessor)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace finance_reporter_api.Utils
                     return null;
 
                 // Get current user from sql db
-                User user = _context.Users.FirstOrDefault(u => u.Email.ToLower().Equals(email.ToLower()));
+                User? user = _context.Users.FirstOrDefault(u => u.Email.ToLower().Equals(email.ToLower()));
 
                 return user;
             }

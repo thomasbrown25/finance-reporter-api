@@ -13,22 +13,22 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace finance_reporter_api.Services.AuthService
+namespace finance_reporter_api.Services.UserService
 {
-    public class AuthService : IAuthService
+    public class UserService : IUserService
     {
         private readonly DataContext _context;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly Logger.ILogger _logger;
+        private readonly LoggerService.ILogger _logger;
 
-        public AuthService(
+        public UserService(
             DataContext context,
             IConfiguration configuration,
             IMapper mapper,
             IHttpContextAccessor httpContextAccessor,
-            Logger.ILogger logger
+            LoggerService.ILogger logger
         )
         {
             _context = context;
@@ -40,14 +40,14 @@ namespace finance_reporter_api.Services.AuthService
 
         public async Task<ServiceResponse<LoadUserDto>> Register(User user, string password)
         {
-            var response = new ServiceResponse<LoadUserDto>();
-            response.Data = new LoadUserDto();
+            var response = new ServiceResponse<LoadUserDto> { Data = new LoadUserDto() };
 
             try
             {
                 if (await UserExists(user.Email))
                 {
                     response.Message = "A user with that email already exists.";
+                    response.Success = false;
                     return response;
                 }
 
@@ -68,6 +68,8 @@ namespace finance_reporter_api.Services.AuthService
 
                 await _context.SaveChangesAsync();
 
+                response.Message = ResponseMessage.UserRegisterSuccess;
+
                 response.Data = _mapper.Map<LoadUserDto>(user);
 
             }
@@ -75,7 +77,7 @@ namespace finance_reporter_api.Services.AuthService
             {
                 _logger.LogException(ex);
                 response.Success = false;
-                response.Message = ex.Message;
+                response.Message = $"{ResponseMessage.UserRegisterFailed}: {ex.Message}";
             }
 
             return response;
@@ -107,12 +109,13 @@ namespace finance_reporter_api.Services.AuthService
                 {
                     response.Data.JWTToken = CreateToken(user);
                 }
+                response.Message = ResponseMessage.UserLoginSuccess;
             }
             catch (Exception ex)
             {
                 _logger.LogException(ex);
                 response.Success = false;
-                response.Message = ex.Message;
+                response.Message = $"{ResponseMessage.UserLoginFailed}: {ex.Message}";
             }
             return response;
         }
@@ -160,7 +163,7 @@ namespace finance_reporter_api.Services.AuthService
                 // _context.RemoveRange(dbTransactions);
                 _context.Remove(user);
 
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
                 response.Data = $"Deleted user {user.FirstName} {user.LastName}";
             }
@@ -242,6 +245,63 @@ namespace finance_reporter_api.Services.AuthService
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+        public async Task<ServiceResponse<SettingsDto>> GetSettings()
+        {
+            var response = new ServiceResponse<SettingsDto>();
+
+            try
+            {
+                response.Data = new SettingsDto();
+
+                var user = Helper.GetCurrentUser(_context, _httpContextAccessor);
+
+                var dbSettings = await _context.UserSettings
+                                   .FirstOrDefaultAsync(s => s.UserId == user.Id);
+
+                response.Message = ResponseMessage.UserSettingGetSuccess;
+
+                response.Data = _mapper.Map<SettingsDto>(dbSettings);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"{ResponseMessage.UserSettingGetFailed}: {ex.Message}";
+                return response;
+            }
+            return response;
+        }
+
+        public async Task<ServiceResponse<SaveSettingsDto>> SaveSettings(SaveSettingsDto newSettings)
+        {
+            var response = new ServiceResponse<SaveSettingsDto>();
+
+            try
+            {
+                response.Data = new SaveSettingsDto();
+
+                var user = Helper.GetCurrentUser(_context, _httpContextAccessor);
+
+                var dbSettings = await _context.UserSettings
+                                   .FirstOrDefaultAsync(s => s.UserId == user.Id);
+
+                if (dbSettings is not null)
+                    _mapper.Map<SaveSettingsDto, UserSettings>(newSettings, dbSettings);
+
+                await _context.SaveChangesAsync();
+
+                response.Message = ResponseMessage.UserSettingSaveSuccess;
+
+                response.Data = newSettings;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = $"{ResponseMessage.UserSettingSaveFailed}: {ex.Message}";
+                return response;
+            }
+            return response;
         }
     }
 }

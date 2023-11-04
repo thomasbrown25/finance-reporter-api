@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace finance_reporter_api.Logger
+namespace finance_reporter_api.Services.LoggerService
 {
     public interface ILogger
     {

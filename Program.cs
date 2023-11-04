@@ -1,7 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Principal;
 using finance_reporter_api.Data;
-using finance_reporter_api.Services.AuthService;
+using finance_reporter_api.Services.CreditReportService;
+using finance_reporter_api.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -60,8 +61,9 @@ services.AddSwaggerGenNewtonsoftSupport();
 services.AddAutoMapper(typeof(Program).Assembly);
 services.AddSingleton<IConfiguration>(configuration);
 
-services.AddScoped<IAuthService, AuthService>();
-services.AddTransient<finance_reporter_api.Logger.ILogger, finance_reporter_api.Logger.Logger>();
+services.AddScoped<IUserService, UserService>();
+services.AddScoped<ICreditReportService, CreditReportService>();
+services.AddTransient<finance_reporter_api.Services.LoggerService.ILogger, finance_reporter_api.Services.LoggerService.Logger>();
 
 // Authentication
 services
